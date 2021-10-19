@@ -1,3 +1,5 @@
 module.exports.app = function(req,res){
-    return res.end("<h1>This is a chatter application which will published sooner!!</h1>");
+    return res.render('about' ,{
+        title:"about app"
+    });
 };
