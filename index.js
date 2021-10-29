@@ -1,14 +1,18 @@
 const express = require('express');
 const app = express();
 const port = 8000;
-const db = require('./config/mongoose');
+const cookieParser = require('cookie-parser');
 //Importing the express layouts
 const expressLayouts = require('express-ejs-layouts');
+const db = require('./config/mongoose');
+
+app.use(cookieParser());
 //use the express layouts before it work with routes
 app.use(expressLayouts);
 //set up static files
 app.use(express.static('./assets'));
-
+//To decoded the post request we use urlencoded
+app.use(express.urlencoded());
 //set up the way to handle substyle and scripts in our html file
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);

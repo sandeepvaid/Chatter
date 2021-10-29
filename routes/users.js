@@ -9,4 +9,7 @@ router.get('/post',post.post);
 router.get('/sign-up',user.signUp);
 router.get('/sign-in',user.signIn);
 
+
+//Module for create user and login user
+router.post('/create',user.create);
 module.exports = router;
