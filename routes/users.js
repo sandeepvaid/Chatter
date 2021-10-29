@@ -12,4 +12,7 @@ router.get('/sign-in',user.signIn);
 
 //Module for create user and login user
 router.post('/create',user.create);
+router.post('/create-session',user.createSession);
+
+router.get('/sign-out',user.signOut);
 module.exports = router;

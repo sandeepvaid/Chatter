@@ -3,7 +3,22 @@ const User = require('../models/user');
 
 //Profile action
 module.exports.profle = function(req,res){
-    return res.end("<h1>User profile is loading!!</h1>");
+    //Validate the user enterance
+    if(req.cookies.user_id){
+        User.findById(req.cookies.user_id,(err,user)=>{
+            if(err){console.log("There is an error in validating the user profile"); return;}
+
+            //If user is there
+            if(user){
+                return res.render("profile",{
+                    name:user.name,
+                    email:user.email
+                });
+            }
+        })
+    }else{
+        return res.redirect("/user/sign-in");
+    }
 }
 
 //signup action
@@ -43,5 +58,30 @@ module.exports.create = function(req,res){
 }
 
 module.exports.createSession = function(req,res){
-    //TO do later
+    //find the user
+    User.findOne({email:req.body.email},function(err,user){
+        if (err){console.log("There is an error in finding the user email in sign in"); return; }
+
+        //handle user found
+        if(user){
+            //handling mismatching / validate password
+            if(user.password != req.body.password){
+                return res.redirect("back");
+            }
+            //If password is correct handle the session creation
+            res.cookie("user_id",user.id);
+            return res.redirect("/user/profile");
+
+        }else{
+            //handle user not found
+            return res.redirect("back");
+        }
+    });    
 }
+
+
+//Create action for user sign out
+module.exports.signOut = function(req,res){
+    res.clearCookie("user_id");
+    return res.redirect('/');
+};
