@@ -57,6 +57,7 @@ module.exports.create = function(req,res){
 });
 }
 
+//Create user or signin action or login action
 module.exports.createSession = function(req,res){
     //find the user
     User.findOne({email:req.body.email},function(err,user){
