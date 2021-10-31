@@ -3,11 +3,17 @@ const User = require('../models/user');
 
 //Profile action
 module.exports.profle = function(req,res){
-    return res.end("<h1>User profile is loading!!</h1>");
+    return res.render('profile',{
+        title:"Profile",
+    });
 }
 
 //signup action
 module.exports.signUp = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/user/profile')
+    }
+
     return res.render("sign_up",{
         title:"User | Sign-Up"
     });
@@ -15,6 +21,9 @@ module.exports.signUp = function(req,res){
 
 //Signin action
 module.exports.signIn = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/user/profile')
+    }
     return res.render("sign_in",{
         title:"User | Sign-in"
     });
@@ -43,5 +52,12 @@ module.exports.create = function(req,res){
 }
 
 module.exports.createSession = function(req,res){
-    //TO do later
+    return res.redirect('/user/profile');
+}
+
+//Destroy the session or sign pout
+module.exports.destroySession = function(req,res){
+    
+    req.logout();
+    return res.redirect('/');
 }
