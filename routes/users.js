@@ -6,7 +6,7 @@ const passport = require('passport');
 
 
 router.get('/profile',passport.checkAuthentication,user.profle);
-router.get('/post',post.post);
+
 //ROute to the user signin and signup page
 router.get('/sign-up',user.signUp);
 router.get('/sign-in',user.signIn);
@@ -16,12 +16,6 @@ router.get('/sign-in',user.signIn);
 router.post('/create',user.create);
 
 
-//Use passport as middlewear to authenticate user request
-// router.post('/create-session',passport.authenticate(
-//     'local',
-//     {failureRedirect: '/user/sign-in'},
-// ),user.createSession);
-
 router.post('/create-session', passport.authenticate(
     'local',
     {failureRedirect: '/user/sign-in'},
@@ -29,5 +23,7 @@ router.post('/create-session', passport.authenticate(
 
 
 router.get('/sign-out',user.destroySession);
+
+//post
 
 module.exports = router;

@@ -9,6 +9,6 @@ router.get('/',home.home);
 //For accessing other router we use middlewears
 // router.use('/about',require('./about'));
 router.use('/user',require('./users'));
-
+router.use('/post',require('./post'));
 
 module.exports = router;

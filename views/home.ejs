@@ -1,13 +1,31 @@
-<head>
-    <title>
-        <%= title%>
-    </title>
-        
-    <link rel="stylesheet" href="css/home.css">
-    <body>
-        
+<link rel="stylesheet" href="css/home.css">
+<h1>This is home page of Chatter with layouts </h1>
+<section name="" id="feed-posts">
+    <h4>Posts</h4>
+    <form action="/post/create" method="post" id="new-post-form">
 
-        <h1>This is home page of Chatter with layouts </h1>
-       
-    </body>
-</head>
+        <textarea name="content" cols="30" rows="3" placeholder="Type here..."></textarea>
+        <input type="submit" value="Post">
+    </form>
+
+    <div id="post-list-container">
+        <ul>
+            <%for(let post of posts){ %>
+
+                <li>
+
+                    <p>
+                        <%= post.content%>
+                        <br>
+                        <small>
+                            <h5><%= post.user.name%></h5>
+                        </small>
+                    </p>
+                    
+                </li>
+            <%}%>
+        </ul>
+    </div>
+</section>
+
+

@@ -1,4 +1,5 @@
 //import the user models
+const { Cookie } = require('express-session');
 const User = require('../models/user');
 
 //Profile action
@@ -61,3 +62,4 @@ module.exports.destroySession = function(req,res){
     req.logout();
     return res.redirect('/');
 }
+
