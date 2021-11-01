@@ -14,6 +14,17 @@ const passportLocal = require('./config/passport-local-strategy');
 //Importing the connect mongo for storing the session cookie
 const MongoStore = require('connect-mongo');
 
+//IMport sass middle wear for styling
+const sassMiddleware = require('node-sass-middleware');
+//using scss middleware
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug:true,
+    outputStyle:'expanded',
+    prefix:'/css'
+}))
+
 app.use(cookieParser());
 //use the express layouts before it work with routes
 app.use(expressLayouts);

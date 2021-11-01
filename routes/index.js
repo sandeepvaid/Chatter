@@ -7,7 +7,7 @@ console.log("Router is loaded");
 router.get('/',home.home);
 
 //For accessing other router we use middlewears
-router.use('/about',require('./about'));
+// router.use('/about',require('./about'));
 router.use('/user',require('./users'));
 
 

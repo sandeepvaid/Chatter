@@ -1,26 +1,49 @@
+
+<link rel="stylesheet" href="/css/header.css">
 <header>
-    This is the page header
+    <a href="/">
+        <img src="/images/logo.png" alt="logo-image">
+    </a>
 
     <ul>
         <% if (locals.user) {%>
 
             <li>
-                <a href="/user/profile">
-                    <%= user.name%>
-                </a>
+                <button>
+                    <a href="/user/profile">
+                        <%= user.name%>
+                    </a>
+                </button>
+                
             </li>
             <li> 
-                <a href="/user/sign-out">
-                    Sign out
-                </a>
+
+               <button>
+                    <a href="/user/sign-out">
+                        Sign out
+                    </a>
+               </button>
+                    
+                
+
+                
              </li>
         <% }else{ %>
             <li>
-                <a href="/user/sign-in">sign-in</a>
+                <button >
+                    <a href="/user/sign-in">sign-in</a>
+                </button>
+                    
             </li>
 
             <li>
-                <a href="/user/sign-up">sign-up</a>
+
+                <button>
+                    <a href="/user/sign-up">sign-up</a>
+                </button>
+                    
+                
+                
             </li>
 
         <% } %>
