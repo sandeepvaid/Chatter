@@ -4,7 +4,7 @@ module.exports.createPost = function(req,res){
     // console.log(req.body);
     // console.log(req.user._id);
     // return res.redirect('/');
-    if(req.isAuthenticated()){
+   
         Post.create({
             content:req.body.content,
             user:req.user._id
@@ -16,6 +16,6 @@ module.exports.createPost = function(req,res){
         });
 
         return res.redirect('/');
-    }
+  
     
 }

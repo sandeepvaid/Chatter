@@ -10,5 +10,7 @@ router.get('/',home.home);
 // router.use('/about',require('./about'));
 router.use('/user',require('./users'));
 router.use('/post',require('./post'));
+router.use('/comment',require('./comment'));
+
 
 module.exports = router;

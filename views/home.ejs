@@ -2,12 +2,15 @@
 <h1>This is home page of Chatter with layouts </h1>
 <section name="" id="feed-posts">
     <h4>Posts</h4>
+
+    <% if(locals.user){%>
+
     <form action="/post/create" method="post" id="new-post-form">
 
-        <textarea name="content" cols="30" rows="3" placeholder="Type here..."></textarea>
+        <textarea name="content" cols="30" rows="3" placeholder="Type here... " required></textarea>
         <input type="submit" value="Post">
     </form>
-
+    <%}%>
     <div id="post-list-container">
         <ul>
             <%for(let post of posts){ %>
@@ -18,10 +21,37 @@
                         <%= post.content%>
                         <br>
                         <small>
-                            <h5><%= post.user.name%></h5>
+                            <h5> Created by <%= post.user.name%></h5>
                         </small>
                     </p>
+                    <div class="post-comments">
+                        <%if(locals.user){%>
+                            <form action="/comment/create" method="post">
+                            
+                                <input type="text" name="content" placeholder="Type here to add comment ...." required>
+                                <input type="hidden" name="post" value="<%= post._id%>">
+                                <input type="submit" value="Add comment">
+
+                            </form>
+                        <%}%>
                     
+                        <div class="post-comment-list">
+                            <ul id="post-comments-<%= post._id%>">
+                                 <% for(let comment of post.comments){%>
+                                    <p>
+                                        <%= comment.content%>
+                                        <br>
+                                        <small>
+                                            <span>Commented by</span>
+                                            <%= comment.user.name%>
+                                        </small>
+                                    </p>
+
+                                <%}%>
+                            </ul>
+                        </div>
+                    </div>
+
                 </li>
             <%}%>
         </ul>
