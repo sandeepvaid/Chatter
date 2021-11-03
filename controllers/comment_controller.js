@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-
+const User = require('../models/user');
 module.exports.create = function(req,res){
     //Validate the comment by checking that the post on which we add a comment is a valid post
     Post.findById(req.body.post,function(err,post){
@@ -25,4 +25,25 @@ module.exports.create = function(req,res){
         
     })
 
+}
+
+//Deletion of comment 
+module.exports.destroy = function(req,res){
+    Comment.findById(req.params.id , function(err,comment){
+        // console.log(req.);
+        User.findById(req.user.id,function(err,findeduser){
+            console.log(findeduser);
+            if(comment.user == req.user.id || findeduser.id == req.user.id){
+                let postId = comment.post;
+
+                comment.remove();
+                Post.findByIdAndUpdate(postId,{$pull:{comments: req.params.id}},function(err,post){
+                    return res.redirect('back');
+                })
+            }else{
+                return res.redirect('back');
+            }
+        })
+        
+    })
 }

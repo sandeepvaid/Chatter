@@ -40,10 +40,11 @@ module.exports.create = function(req,res){
    //Check if that email is already present or not
    User.findOne({email:req.body.email},function(error,user){
     if (error){console.log("There is an error in validating the user email"); return; }
-
+    console.log(user)
     if(!user){
         User.create(req.body,function(err,user){
-             if(err){console.log("There is an error in creating user in database the user email"); return; }
+            
+             if(err){console.log("There is an error in creating user in database the user email",err); return; }
              return res.redirect('/user/sign-in');
         });
     }else{
