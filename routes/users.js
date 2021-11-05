@@ -5,7 +5,8 @@ const post = require('../controllers/post_controller');
 const passport = require('passport');
 
 
-router.get('/profile',passport.checkAuthentication,user.profle);
+router.get('/profile/:id',passport.checkAuthentication,user.profle);
+router.post('/update-profile/:id',passport.checkAuthentication,user.update);
 
 //ROute to the user signin and signup page
 router.get('/sign-up',user.signUp);

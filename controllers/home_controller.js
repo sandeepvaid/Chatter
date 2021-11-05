@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-
+const User = require('../models/user');
 module.exports.home = function(req,res){
     // console.log(req.cookies);
     // res.cookie("user_id" , 45);
@@ -21,10 +21,14 @@ module.exports.home = function(req,res){
         }
     })
     .exec(function(err,posts){
-            return res.render('home' ,{
-                title:"Chatter",
-                posts:posts
-            });
+            User.find({},function(err,users){
+                return res.render('home' ,{
+                    title:"Chatter",
+                    posts:posts,
+                    all_users:users
+                });
+            })
+            
         });
  
 };

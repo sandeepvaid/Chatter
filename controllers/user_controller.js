@@ -1,13 +1,31 @@
 //import the user models
-const { Cookie } = require('express-session');
+const  Cookie  = require('express-session');
 const User = require('../models/user');
 
 //Profile action
 module.exports.profle = function(req,res){
-    return res.render('profile',{
-        title:"Profile",
-    });
+    User.findById(req.params.id , function(err,user){
+        return res.render('profile',{
+            title:"Profile",
+            user_profile:user
+        });
+    })
+    
 }
+
+//Update the profile
+module.exports.update = function(req,res){
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id ,req.body,function(err,user){
+            return res.redirect('back');
+        
+    });
+    }else{
+        return res.status(401).send('Unauthorized');
+    }
+}
+
+
 
 //signup action
 module.exports.signUp = function(req,res){
