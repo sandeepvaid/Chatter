@@ -1,48 +1,46 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 //Post controller
-module.exports.createPost = function(req,res){
+module.exports.createPost = async function(req,res){
     // console.log(req.body);
     // console.log(req.user._id);
     // return res.redirect('/');
-   
-        Post.create({
-            content:req.body.content,
-            user:req.user._id
-        },function(err,post){
-            if(err){
-                console.log("There is an error in creating the post");
-                return;
-            }
-        });
-
-        return res.redirect('/');
+        try{
+            await Post.create({
+                content:req.body.content,
+                user:req.user._id
+            });
+            req.flash('success','Your post is uploaded');
+            return res.redirect('/');
+        }catch(err){
+            req.flash('error','Some error in post');
+            console.log("Error",err);
+        }
+        
       
 }
 
 //Controller to delete comments using params
-module.exports.destroy = function(req,res){
-    console.log(req.params.id);
-    Post.findById(req.params.id,function(err,post){
-        if(err){
-            console.log("The post you want to delete is not there in db");
+module.exports.destroy = async function(req,res){
+
+    try{
+        let post = await Post.findById(req.params.id);
+        if(post.user == req.user.id){
+            post.remove()
+    
+            await Comment.deleteMany({post:req.params.id});
+            req.flash('success','Your post is deleted !!');
             return res.redirect('back');
         }else{
-            //Now we come to know that there is a post by that id now we check that if the requested user how want to delete the post and the person how created that post is same then we can delete the post
-            // console.log(post.user);
-            // console.log(req.user._id);
-            if(post.user == req.user.id){
-                post.remove()
-
-                Comment.deleteMany({post:req.params.id},function(err){
-                    return res.redirect('back');
-                });
-            }else{
-                console.log("post user and deleted user not matched")
-                return res.redirect('back');
-            }
+            req.flash('error','You cannot delete this post!!');
+            console.log("post user and deleted user not matched")
+            return res.redirect('back');
         }
-
-        
-    })
+    }catch(err){
+        req.flash('error',err);
+        console.log("Error in logout");
+        return res.redirect('back');
+    }
+    
+  
 }

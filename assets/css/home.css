@@ -17,3 +17,13 @@
   border-left: 1px solid lightgrey;
   height: inherit;
 }
+
+#home-container #friend-list li {
+  font-size: 20px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+#home-container #friend-list li a {
+  text-decoration: none;
+}

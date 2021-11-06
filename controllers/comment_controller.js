@@ -1,7 +1,9 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 const User = require('../models/user');
-module.exports.create = function(req,res){
+
+
+module.exports.create =  function(req,res){
     //Validate the comment by checking that the post on which we add a comment is a valid post
     Post.findById(req.body.post,function(err,post){
         if(err){
@@ -20,6 +22,7 @@ module.exports.create = function(req,res){
             }
             post.comments.push(comment);
             post.save();
+            req.flash('success','Comment is created');
             return res.redirect("/")
         });
         
@@ -37,10 +40,12 @@ module.exports.destroy = function(req,res){
                 let postId = comment.post;
 
                 comment.remove();
+                req.flash('success','Comment is deleted');
                 Post.findByIdAndUpdate(postId,{$pull:{comments: req.params.id}},function(err,post){
                     return res.redirect('back');
                 })
             }else{
+                req.flash('error','You are not authorized!!');
                 return res.redirect('back');
             }
         })
