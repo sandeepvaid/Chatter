@@ -13,16 +13,7 @@
   -moz-box-shadow: 0 2px 5px rgba(0,0,0,0.075);
   text-align: center;
 }
-.container:hover .avatar-flip {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-}
-.container:hover .avatar-flip img:first-child {
-  opacity: 0;
-}
-.container:hover .avatar-flip img:last-child {
-  opacity: 1;
-}
+
 .avatar-flip {
   border-radius: 100px;
   overflow: hidden;
@@ -50,12 +41,7 @@
 .avatar-flip img:first-child {
   z-index: 1;
 }
-.avatar-flip img:last-child {
-  z-index: 0;
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-  opacity: 0;
-}
+
 h2 {
   font-size: 32px;
   font-weight: 600;

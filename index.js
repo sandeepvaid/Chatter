@@ -33,6 +33,8 @@ app.use(cookieParser());
 app.use(expressLayouts);
 //set up static files
 app.use(express.static('./assets'));
+//make the upload folder used by browser
+app.use('/uploads',express.static(__dirname+'/uploads'));
 //To decoded the post request we use urlencoded
 app.use(express.urlencoded());
 
