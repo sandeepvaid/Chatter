@@ -1,133 +1,118 @@
-{
-    //Method to submit the form data for new post using Ajax
+{   
+    // method to submit the form data for new post using AJAX
     let createPost = function(){
         let newPostForm = $('#new-post-form');
-        // console.log(newPostForm)
+
         newPostForm.submit(function(e){
             e.preventDefault();
+
             $.ajax({
                 type: 'post',
-                url:'/post/create',
-                data:newPostForm.serialize(),
-                success:function(data){
-                    console.log(data);
+                url: '/post/create',
+                data: newPostForm.serialize(),
+                success: function(data){
                     let newPost = newPostDom(data.data.post);
-                    notyShow(data.name,'success','created');
-              
-                    $('#post-list-container > ul').prepend(newPost);
-               
-                    deletePost($(' .delete-post-button',newPost));
-               
-                },error: function(error){
+                    $('#post-list-container>ul').prepend(newPost);
+                    deletePost($(' .delete-post-button', newPost));
+
+                    // call the create comment class
+                    new PostComments(data.data.post._id);
+
+                    new Noty({
+                        theme:'relax',
+                        text: `Post published`,
+                        type:'success',
+                        layout:'topRight',
+                        timeout: 1500
+                    }).show();
+
+                }, error: function(error){
                     console.log(error.responseText);
                 }
             });
         });
     }
 
-    //Method to create a post in Dom
+
+    // method to create a post in DOM
     let newPostDom = function(post){
-        console.log(post.user.name);
-        return $(`
-                <li id="post-${post._id}">
+        return $(`<li id="post-${post._id}">
                     <p>
+                        
                         <small>
-                            <a class="delete-post-button" href="/post/destroy/${post._id}">X</a>
+                            <a class="delete-post-button"  href="/post/destroy/${post._id}">X</a>
                         </small>
-  
-                        ${post.content}
+                       
+                        ${ post.content }
                         <br>
                         <small>
-                            <h5>  Created by  ${post.user.name}</h5>
+                        ${ post.user.name }
                         </small>
                     </p>
                     <div class="post-comments">
                         
-                        <form action="/comment/create" method="post">
+                        <form action="/comment/create" method="post" id="new-comment-form">
                         
                             <input type="text" name="content" placeholder="Type here to add comment ...." required>
                             <input type="hidden" name="post" value="${post._id}">
                             <input type="submit" value="Add comment">
             
                         </form>
+               
                 
-                    
                         <div class="post-comment-list">
-                            <ul id="post-comments-${post._id}">
+                            <ul id="post-comments-${ post._id }">
                                 
                             </ul>
                         </div>
                     </div>
-                
-                </li>`
-                    )
+                    
+                </li>`)
     }
 
 
-    //Function to delete the post
-    let deletePost = function(deletelink){
-        $(deletelink).click(function(e){
+    // method to delete a post from DOM
+    let deletePost = function(deleteLink){
+        $(deleteLink).click(function(e){
             e.preventDefault();
-            console.log("Am the delete post")
+
             $.ajax({
-                type:'get',
-                url: $(deletelink).prop('href'),
-                success:function(data){
+                type: 'get',
+                url: $(deleteLink).prop('href'),
+                success: function(data){
                     $(`#post-${data.data.post_id}`).remove();
-                    notyShow(data.name,'success','deleted');
+                    new Noty({
+                        theme: 'relax',
+                        text: "Post Deleted",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                        
+                    }).show();
                 },error: function(error){
                     console.log(error.responseText);
                 }
             });
+
         });
     }
 
 
-    let populate_all_delete=function(){
-        console.log("Inside element")
+
+    // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
+    let convertPostsToAjax = function(){
         $('#post-list-container>ul>li').each(function(){
-            let element=$(this);
-            console.log(element);
-            deletePost($(' .delete-post-button',element));
+            let self = $(this);
+            let deleteButton = $(' .delete-post-button', self);
+            deletePost(deleteButton);
 
-           
+            let postId = self.prop('id').split("-")[1]
+            new PostComments(postId);
         });
     }
 
-    //function for noty
-    let notyShow = function(creator,type,shower){
-        if(type == 'success'){
-            new Noty({
-                theme:'relax',
-                text: `${creator} your post is ${shower}`,
-                type:'success',
-                layout:'topRight',
-                timeout: 1500
-            }).show();
-        }else{
-            new Noty({
-                theme:'relax',
-                text: `${creator}Something is wrong`,
-                type:'error',
-                layout:'topRight',
-                timeout: 1500
-            }).show();
-        }
-    }
 
-    populate_all_delete();
+
     createPost();
+    convertPostsToAjax();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

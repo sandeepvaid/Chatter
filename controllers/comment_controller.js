@@ -20,13 +20,14 @@ module.exports.create = async function(req,res){
         if(req.xhr){
             return res.status(200).json({
                 data:{
-                    comment:comment
-                }
+                    comment:comment,
+                },
+                message:"Comment is created"
             })
         }
 
         req.flash('success','Comment is created');
-        return res.redirect("/")
+        return res.redirect("back")
     }catch(err){
         console.log("Error in adding comment to the database");
         return;
