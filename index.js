@@ -13,6 +13,7 @@ const passport = require('passport');
 //Passport strategy importing
 const passportLocal = require('./config/passport-local-strategy');
 const passportJwt = require('./config/passport-jwt-strategy');
+const passportGoogleAuth = require('./config/passport-google-oauth2-strategy');
 //Importing the connect mongo for storing the session cookie
 const MongoStore = require('connect-mongo');
 

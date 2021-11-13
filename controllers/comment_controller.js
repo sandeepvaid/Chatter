@@ -22,7 +22,7 @@ module.exports.create = async function(req,res){
                 data:{
                     comment:comment,
                 },
-                message:"Comment is created"
+                message:"Comment is created by AJAx"
             })
         }
 

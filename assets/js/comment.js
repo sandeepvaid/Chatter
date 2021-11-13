@@ -9,7 +9,7 @@ class PostComments{
     constructor(postId){
         this.postId = postId;
         this.postContainer = $(`#post-${postId}`);
-        this.newCommentForm = $(`#new-comment-form`);
+        this.newCommentForm = $(`#new-comment-form-${postId}`);
 
         this.createComment(postId);
 
@@ -70,7 +70,6 @@ class PostComments{
                                 ${comment.user.name}
                             </small>
                         </p>    
-
                 </li>`);
     }
 

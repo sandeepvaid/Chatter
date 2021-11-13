@@ -14,7 +14,7 @@
                     let newPost = newPostDom(data.data.post);
                     $('#post-list-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));
-
+                    console.log(data);
                     // call the create comment class
                     new PostComments(data.data.post._id);
 
@@ -51,7 +51,7 @@
                     </p>
                     <div class="post-comments">
                         
-                        <form action="/comment/create" method="post" id="new-comment-form">
+                        <form action="/comment/create" method="post" id="new-comment-form-${post._id}">
                         
                             <input type="text" name="content" placeholder="Type here to add comment ...." required>
                             <input type="hidden" name="post" value="${post._id}">
