@@ -10,7 +10,9 @@ const db = require('./config/mongoose');
 //Import express session for encryption of session cookie
 const session = require('express-session');
 const passport = require('passport');
+//Passport strategy importing
 const passportLocal = require('./config/passport-local-strategy');
+const passportJwt = require('./config/passport-jwt-strategy');
 //Importing the connect mongo for storing the session cookie
 const MongoStore = require('connect-mongo');
 
