@@ -5,8 +5,6 @@ const cookieParser = require('cookie-parser');
 //Importing the express layouts
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
-
-
 //Import express session for encryption of session cookie
 const session = require('express-session');
 const passport = require('passport');
