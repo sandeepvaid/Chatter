@@ -3,6 +3,7 @@ const router = express.Router();
 const user = require('../controllers/user_controller');
 const post = require('../controllers/post_controller');
 const passport = require('passport');
+const reset = require('../controllers/reset_controller');
 console.log("Am user controllers")
 
 router.get('/profile/:id',passport.checkAuthentication,user.profile);
@@ -30,6 +31,10 @@ router.get('/auth/google/callback',
 
 router.get('/sign-out',user.destroySession);
 
-//post
+//Forget password
+router.get('/reset-password',user.resetPasswordForm);
+router.post('/mail-accessToken',reset.sendToken);
+router.post('/reset-password-page/:id',reset.validateToken);
+router.post('/confirm-change/:id',reset.changePassword);
 
 module.exports = router;
