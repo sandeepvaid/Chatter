@@ -37,37 +37,64 @@
     // method to create a post in DOM
     let newPostDom = function(post){
         return $(`<li id="post-${post._id}">
-                    <p>
-                        
-                        <small>
-                            <a class="delete-post-button"  href="/post/destroy/${post._id}">X</a>
-                        </small>
+
+
+                    <div class="post-container">
+                        <div class="header">
+                            <div class="left-part">
+                                <img src="${post.user.avatar}">
+                    
+                                <h5 >${ post.user.name }</h5>
+                
+                            </div>
+                            <div class="right-part">
+                                
+                                <a class="delete-post-button" href="/post/destroy/${post._id}<i class="fas fa-times-circle"></i></a>
                        
-                        ${ post.content }
-                        <br>
-                        <small>
-                        ${ post.user.name }
-                        </small>
-                    </p>
-                    <div class="post-comments">
-                        
-                        <form action="/comment/create" method="post" id="new-comment-form-${post._id}">
-                        
-                            <input type="text" name="content" placeholder="Type here to add comment ...." required>
-                            <input type="hidden" name="post" value="${post._id}">
-                            <input type="submit" value="Add comment">
-            
-                        </form>
-               
+                            </div>
+                
+                        </div>
+                
+                        <div class="post-content">
+                            <p>
+                            ${ post.content }
+                            </p>
+                        </div>
+                
+                        <div class="footer">
+                            <button><i class="far fa-lg fa-heart"></i></button>
+                            <button><i class="fas fa-lg fa-comments"></i></button>
+                
+                        </div>
+                    </div>
+                
+                    <div class="comment-container">
+                        <div class="post-comments">
+                            
+                                <form action="/comment/create" method="post" id="new-comment-form-${post._id}">
+                                    <input id="add-comment" type="text" name="content" placeholder="Type here to add comment ...." required>
+                                    <input type="hidden" name="post" value="<%= post._id%>">
+                                    <input id="add-button" type="submit" value="Add comment">
+                
+                                </form>
+                     
+                        </div>
                 
                         <div class="post-comment-list">
                             <ul id="post-comments-${ post._id }">
-                                
+                                <% for(comment of post.comments){%>
+                
+                                    <%-include('_comment')-%>
+                
+                                <%}%>
                             </ul>
                         </div>
                     </div>
-                    
-                </li>`)
+    
+        
+        
+        
+        `)
     }
 
 

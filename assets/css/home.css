@@ -3,8 +3,9 @@
 }
 
 #home-container #feed-posts {
-  width: 70%;
+  width: 40%;
   padding: 10px;
+  margin-left: 25%;
 }
 
 #home-container ul {
