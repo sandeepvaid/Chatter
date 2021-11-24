@@ -22,13 +22,36 @@
 
         <div class="post-content">
             <p>
-                <%= post.content%>
+                <%= post.content %>
+                
             </p>
         </div>
 
         <div class="footer">
-            <button><i class="far fa-lg fa-heart"></i></button>
-            <button><i class="fas fa-lg fa-comments"></i></button>
+
+            <%if(locals.user){%>
+                <% if(post.likes.includes(locals.user._id)){%>
+                    <a class="toggle-like-button red" data-likes="<%= post.likes.length%>" href="/likes/toggle/?id=<%= post._id%>&type=Post">
+                        <i class="fas fa-lg fa-thumbs-up">
+                            <%= post.likes.length%>
+                        </i>
+                    </a>
+                <%}else{%>
+                    <a class="toggle-like-button red" data-likes="<%= post.likes.length%>" href="/likes/toggle/?id=<%= post._id%>&type=Post">
+                        <i class="far fa-lg fa-thumbs-up">
+                            <%= post.likes.length%>
+                        </i>
+                    </a>
+                <%}%>
+            <%}else{%>
+                <i class="far fa-lg fa-thumbs-up">
+                    <%= post.likes.length%>
+                    
+                </i>
+            <%}%>
+
+            
+            <i class="fas fa-lg fa-comments"></i>
 
         </div>
     </div>

@@ -62,9 +62,17 @@
                         </div>
                 
                         <div class="footer">
-                            <button><i class="far fa-lg fa-heart"></i></button>
-                            <button><i class="fas fa-lg fa-comments"></i></button>
-                
+
+                           
+                            <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                                <button><i class="far fa-lg fa-thumbs-up">
+                                    0
+                                </i></button>
+                            </a>
+                            
+                            
+                            <i class="fas fa-lg fa-comments"></i>
+
                         </div>
                     </div>
                 

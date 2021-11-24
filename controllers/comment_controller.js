@@ -4,6 +4,7 @@ const User = require('../models/user');
 const commentsMailer = require('../mailers/comment_mailer');
 const queue = require('../config/kue');
 const commentEmailWorker = require('../workers/comment_email_worker');
+const Likes = require('../models/like');
 
 module.exports.create = async function(req, res){
 
@@ -54,40 +55,6 @@ module.exports.create = async function(req, res){
 }
 
 
-// // const commentMailer = require('../mailers/comment_mailer');
-
-// module.exports.create = async function(req,res){
-//     //Validate the comment by checking that the post on which we add a comment is a valid post
-
-//     try{
-//         let post = await Post.findById(req.body.post);
-//         let comment = await Comment.create({
-//             content:req.body.content,
-//             user:req.user._id,
-//             post:req.body.post
-//         });
-        
-//         post.comments.push(comment);
-//         post.save();
-//         comment = await comment.populate('user').execPopulate();
-//         // commentMailer.newComment(comment);
-//         if(req.xhr){
-//             return res.status(200).json({
-//                 data:{
-//                     comment:comment,
-//                 },
-//                 message:"Comment is created by AJAx"
-//             })
-//         }
-
-//         req.flash('success','Comment is created');
-//         return res.redirect("back")
-//     }catch(err){
-//         console.log("Error in adding comment to the database");
-//         return;
-//     }
-
-// }
 
 //Deletion of comment 
 module.exports.destroy = async function(req,res){
@@ -99,7 +66,9 @@ module.exports.destroy = async function(req,res){
         if(comment.user == req.user.id || user.id == req.user.id){
             let postId = comment.post;
             comment.remove()
-            await Post.findByIdAndUpdate(postId,{$pull:{comments: req.params.id}})
+            let post = await Post.findByIdAndUpdate(postId,{$pull:{comments: req.params.id}});
+            
+            await Likes.deleteMany({likeable:comment._id ,onModel: 'Comment' });
         }
 
         if(req.xhr){

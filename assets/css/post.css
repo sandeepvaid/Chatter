@@ -55,22 +55,17 @@
 	display: flex;
 }
 
-.footer button{
+.footer i{
     cursor: pointer;
-    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    /* box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24); */
     outline: none;
-    transition: 0.2s all;
+    
     border: none;
 	height:30px;
 	width: 200px;
 }
 
-.footer button:active{
-    transform: scale(0.98);
-            /* Scaling button to 0.98 to its original size */
-    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-            /* Lowering the shadow */
-}
+
 
 .comment-container{
     padding: 2%;
@@ -91,4 +86,8 @@
 
 #add-button{
     width: 100px;
+}
+
+.red{
+	color: rgb(9, 163, 252);
 }
