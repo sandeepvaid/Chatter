@@ -26,5 +26,6 @@
 }
 
 #home-container #friend-list li a {
+  color: white;
   text-decoration: none;
 }

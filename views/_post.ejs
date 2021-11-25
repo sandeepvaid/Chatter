@@ -30,7 +30,11 @@
         <div class="footer">
 
             <%if(locals.user){%>
-                <% if(post.likes.includes(locals.user._id)){%>
+                <%let obj = post.likes.find(o =>{%>
+                    <%return o.user.toString() == user._id%>
+                <%})%>
+             
+                <% if(obj){%>
                     <a class="toggle-like-button red" data-likes="<%= post.likes.length%>" href="/likes/toggle/?id=<%= post._id%>&type=Post">
                         <i class="fas fa-lg fa-thumbs-up">
                             <%= post.likes.length%>
