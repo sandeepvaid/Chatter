@@ -25,7 +25,28 @@
   margin-top: 10px;
 }
 
+#home-container #friend-list li div .add-friend {
+  color: #2c97f0;
+}
+
 #home-container #friend-list li a {
+  color: white;
+  text-decoration: none;
+}
+
+#home-container #all-user {
+  width: 30%;
+  padding: 10px;
+  height: inherit;
+}
+
+#home-container #all-user li {
+  font-size: 20px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+#home-container #all-user li a {
   color: white;
   text-decoration: none;
 }

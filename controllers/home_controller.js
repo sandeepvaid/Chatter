@@ -1,3 +1,4 @@
+const FriendShip = require('../models/friendship');
 const Post = require('../models/post');
 const User = require('../models/user');
 
@@ -23,15 +24,24 @@ module.exports.home = async function(req,res){
             ]
         }).populate('likes')
         
+        let currUser;
+        if(req.user){
+            currUser =await User.findById(req.user._id)
+            .populate('friendShips')
+        }
 
+        console.log(currUser.friendShips);
+        // currUser.friendShips.splice(0, currUser.friendShips.length);
+        // currUser.save();
         let users = await User.find({});
-   
-
+        
+        
         
         return res.render('home', {
             title: "Chatter | Home",
             posts:  posts,
-            all_users: users
+            all_users: users,
+            currUser:currUser
         });
     }catch(err){
         console.log('There is an error in the servor',err);

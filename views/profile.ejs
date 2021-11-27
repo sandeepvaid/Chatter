@@ -29,5 +29,25 @@
       <%}%>
 
 
+      <%if (locals.user && user_profile.id != locals.user.id){%>
+        <% if(locals.user.friendShips.includes(user_profile.id)){%>
+          <a class="add-friend" href="/friend/add-friend/?id=<%= user_profile.id%>">
+            <button>Un Friend</button>
+          </a>
+        <%}else{%>
+          <a class="add-friend" href="/friend/add-friend/?id=<%= user_profile.id%>">
+            <button>Add Friend</button>
+          </a>
+        <%}%>
+      <%}%> 
+
     
   </div>
+
+<script src="/js/profile.js"></script>
+<script>
+    $('.add-friend').each(function(){
+        let self = this;
+        let toggleFriend = new AddFriend(self);
+    });
+</script>
