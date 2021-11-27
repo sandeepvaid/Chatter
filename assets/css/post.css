@@ -91,3 +91,10 @@
 .red{
 	color: rgb(9, 163, 252);
 }
+
+
+.post-comment-list{
+	display: flex;
+	height: 200px;
+	overflow-y:overlay;
+}

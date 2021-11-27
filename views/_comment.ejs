@@ -1,24 +1,33 @@
+<link rel="stylesheet" type="text/css" href="/css/comment.css">
 <li id="comment-<%=comment._id%>">
-    <p>
-        <% if(locals.user){%>
+    
+
+    <div class="comment-container1">
+        <div class="header1">
+            <div class="left-part1">
+                <img src="<%= comment.user.avatar%>">
+                <h6><%= comment.user.name%></h6>
+            </div>
+            <div class="right-part1">
+                <% if(locals.user){%>
             
-            <% if(comment.user.id == locals.user.id ||  post.user.id == locals.user.id){%>
-                <small>
-                    <a class="delete-comment-button" href="/comment/destroy/<%= comment.id%>"><i class="fas fa-times-circle"></i></a>
-                </small>
-            <%}%>
-           
-        <%}%>
-        
-        <%= comment.content%>
-        <br>
-        <small>
-            <span>Commented by</span>
-            <%= comment.user.name%>
-        </small>
+                    <% if(comment.user.id == locals.user.id ||  post.user.id == locals.user.id){%>
+                        <small>
+                            <a class="delete-comment-button" href="/comment/destroy/<%= comment.id%>"><i class="fas fa-times-circle"></i></a>
+                        </small>
+                    <%}%>
+                   
+                <%}%>
+            </div>
+        </div>
 
-        <small>
-
+        <div class="comment-content1">
+            <p>
+                <%= comment.content%>
+            </p>
+        </div>
+            
+        <div class="footer1">
             <%if(locals.user){%>
                 <%let obj = comment.likes.find(o =>{%>
                     <%return o.user.toString() == user._id%>
@@ -37,13 +46,16 @@
                         </i>
                     </a>
                 <%}%>    
-            <%}else{%>
-                <i class="far fa-lg fa-thumbs-up">
-                    <%= comment.likes.length%>
-                </i>
-            <%}%>
-        </small>
-    </p>    
+                <%}else{%>
+                    <i class="far fa-lg fa-thumbs-up">
+                        <%= comment.likes.length%>
+                    </i>
+                <%}%>
+
+        </div>
+            
+    </div>
+
 </li>
 
 
