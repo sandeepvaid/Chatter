@@ -3,24 +3,32 @@ const app = express();
 const port = 8000;
 const cookieParser = require('cookie-parser');
 
-
 //Importing the express layouts
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
+
 //Import express session for encryption of session cookie
 const session = require('express-session');
 const passport = require('passport');
+
 //Passport strategy importing
 const passportLocal = require('./config/passport-local-strategy');
 const passportJwt = require('./config/passport-jwt-strategy');
 const passportGoogleAuth = require('./config/passport-google-oauth2-strategy');
+
 //Importing the connect mongo for storing the session cookie
 const MongoStore = require('connect-mongo');
 
-//IMport sass middle wear for styling
+//Import sass middle wear for styling
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
+
+//Socket.io code
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log("Chat server is listening ar port 5000");
 
 //using scss middleware
 app.use(sassMiddleware({
@@ -74,11 +82,12 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(passport.setAuthenticatedUser);
+
 //app use flash
 app.use(flash());
 app.use(customMware.setFlash);
+
 //Use express router 
 app.use('/',require('./routes'));
 

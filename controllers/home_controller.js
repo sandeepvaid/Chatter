@@ -30,7 +30,7 @@ module.exports.home = async function(req,res){
             .populate('friendShips')
         }
 
-        console.log(currUser.friendShips);
+        // console.log(currUser.friendShips);
         // currUser.friendShips.splice(0, currUser.friendShips.length);
         // currUser.save();
         let users = await User.find({});
