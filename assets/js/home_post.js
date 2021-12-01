@@ -14,10 +14,10 @@
                     let newPost = newPostDom(data.data.post);
                     $('#post-list-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));
-                    console.log(data);
+                    // console.log(data);
                     // call the create comment class
                     new PostComments(data.data.post._id);
-
+                    new ToggleLike($(' .toggle-like-button', newPost));
                     new Noty({
                         theme:'relax',
                         text: `Post published`,
@@ -43,13 +43,14 @@
                         <div class="header">
                             <div class="left-part">
                                 <img src="${post.user.avatar}">
-                    
                                 <h5 >${ post.user.name }</h5>
-                
+                               
                             </div>
                             <div class="right-part">
                                 
-                                <a class="delete-post-button" href="/post/destroy/${post._id}<i class="fas fa-times-circle"></i></a>
+                                <a class="delete-post-button" href="/post/destroy/${post._id}">
+                                    <i class="fas fa-times-circle"></i>
+                                </a>
                        
                             </div>
                 
@@ -62,15 +63,13 @@
                         </div>
                 
                         <div class="footer">
-
                            
-                            <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
-                                <button><i class="far fa-lg fa-thumbs-up">
-                                    0
-                                </i></button>
-                            </a>
-                            
-                            
+                        <a class="toggle-like-button red" data-likes="${post.likes.length}" href="/likes/toggle/?id=${post._id}&type=Post">
+                            <i class="far fa-lg fa-thumbs-up">
+                                0
+                            </i>
+                        </a>
+                                                    
                             <i class="fas fa-lg fa-comments"></i>
 
                         </div>
@@ -78,23 +77,19 @@
                 
                     <div class="comment-container">
                         <div class="post-comments">
-                            
-                                <form action="/comment/create" method="post" id="new-comment-form-${post._id}">
-                                    <input id="add-comment" type="text" name="content" placeholder="Type here to add comment ...." required>
-                                    <input type="hidden" name="post" value="<%= post._id%>">
-                                    <input id="add-button" type="submit" value="Add comment">
-                
-                                </form>
+                        
+                            <form action="/comment/create" method="post" id="new-comment-form-${post._id}">
+                                <input id="add-comment" type="text" name="content" placeholder="Type here to add comment ...." required>
+                                <input type="hidden" name="post" value="${post._id}">
+                                <input id="add-button" type="submit" value="Add comment">
+            
+                            </form>
                      
                         </div>
                 
                         <div class="post-comment-list">
-                            <ul id="post-comments-${ post._id }">
-                                <% for(comment of post.comments){%>
-                
-                                    <%-include('_comment')-%>
-                
-                                <%}%>
+                            <ul id="post-comments-${post._id}">
+                               
                             </ul>
                         </div>
                     </div>

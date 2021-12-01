@@ -12,7 +12,7 @@ class PostComments{
         this.newCommentForm = $(`#new-comment-form-${postId}`);
 
         this.createComment(postId);
-
+       
         let self = this;
         // call for all the existing comments
         $(' .delete-comment-button', this.postContainer).each(function(){
@@ -26,16 +26,19 @@ class PostComments{
         this.newCommentForm.submit(function(e){
             e.preventDefault();
             let self = this;
-
+          
             $.ajax({
                 type: 'post',
                 url: '/comment/create',
                 data: $(self).serialize(),
                 success: function(data){
+                        
+
                     let newComment = pSelf.newCommentDom(data.data.comment);
+                 
                     $(`.post-comment-list #post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
-
+                    new ToggleLike($(' .toggle-like-button', newComment));
                     new Noty({
                         theme: 'relax',
                         text: "Comment published!",
@@ -46,6 +49,7 @@ class PostComments{
                     }).show();
 
                 }, error: function(error){
+                    
                     console.log(error.responseText);
                 }
             });
@@ -59,20 +63,23 @@ class PostComments{
         // I've added a class 'delete-comment-button' to the delete comment link and also id to the comment's li
         return $(`
         
-                <li id="comment-${ comment._id }">
+                <li id="comment-${comment._id}">
     
 
                     <div class="comment-container1">
                         <div class="header1">
                             <div class="left-part1">
-                                <img src="${comment.user.avatar}">
+                                
+                                <img src=${comment.user.avatar}>
                                 <h6>${comment.user.name}</h6>
                             </div>
                             <div class="right-part1">
           
-                            <small>
-                                <a class="delete-comment-button" href="/comment/destroy/${comment.id}"><i class="fas fa-times-circle"></i></a>
-                            </small>
+                                <small>
+                                    <a class="delete-comment-button" href="/comment/destroy/${comment._id}">
+                                        <i class="fas fa-times-circle"></i>
+                                    </a>
+                                </small>
 
                             </div>
                         </div>

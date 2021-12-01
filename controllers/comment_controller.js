@@ -9,7 +9,9 @@ const Likes = require('../models/like');
 module.exports.create = async function(req, res){
 
     try{
+   
         let post = await Post.findById(req.body.post);
+
 
         if (post){
             let comment = await Comment.create({
@@ -20,8 +22,8 @@ module.exports.create = async function(req, res){
 
             post.comments.push(comment);
             post.save();
-            
-            await comment.populate('user', 'name email')
+            await comment.populate('user', 'name email avatar')
+           
             let job =  queue.create('emails',comment).save(function(err){
                 if(err){
                     console.log("Error in creating queue");
@@ -30,10 +32,10 @@ module.exports.create = async function(req, res){
 
                 console.log('job enqueued',job.id);
             });
-            // commentsMailer.newComment(comment);
+            commentsMailer.newComment(comment);
             if (req.xhr){
                 
-    
+                
                 return res.status(200).json({
                     data: {
                         comment: comment

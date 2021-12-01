@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/chatbox.css">
 <% if (locals.user){ %>
 	<div id="user-chat-box">
 	
@@ -19,3 +20,10 @@
 
 	</div>
 <% } %>
+
+
+<%if(locals.user){%>
+	<script>
+		new ChatEngine('user-chat-box','<%= locals.user.email%>')
+	</script>
+	<%}%>
