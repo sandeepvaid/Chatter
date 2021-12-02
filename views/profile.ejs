@@ -11,7 +11,6 @@
         <h4>You are logged in using <%= user_profile.email%></h4>
         <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna ip sum dolore.</p>
         <p>Connec dolore ipsum faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
         <br>
         <form action="/user/update-profile/<%= user_profile.id%>" method="post" enctype="multipart/form-data">
             <input type="text" name="name" placeholder="Your name " value="<%= user_profile.name%>" required>
@@ -20,7 +19,6 @@
             <input type="submit" value="Update Profile">
           
         </form>
-
       <%}else{%>
         <h2><%= user_profile.name%></h2>
         <h4>You are logged in using <%= user_profile.email%></h4>
