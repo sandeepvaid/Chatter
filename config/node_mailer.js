@@ -1,18 +1,9 @@
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
-
+const env = require('./environment');
 //This transporter means that which mail service and mailer id we use to send the email
-let transporter = nodemailer.createTransport({
-    service:'gmail',
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: 'vaid77167@gmail.com', // generated ethereal user
-      pass: 'ktkpyidzgcrxfuyl', // generated ethereal password
-    }
-});
+let transporter = nodemailer.createTransport(env.smtp);
 
 //This rendertemplate is used to pass the template to the user and here we use the template engine called as ejs
 let renderTemplate = (data,relativePath) =>{

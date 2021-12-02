@@ -1,4 +1,7 @@
 const express = require('express');
+const dotenv = require('dotenv');
+dotenv.config();
+const env = require('./config/environment');
 const app = express();
 const port = 8000;
 const cookieParser = require('cookie-parser');
@@ -29,11 +32,12 @@ const chatServer = require('http').Server(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log("Chat server is listening ar port 5000");
+const path = require('path');
 
 //using scss middleware
 app.use(sassMiddleware({
-    src:'./assets/scss',
-    dest:'./assets/css',
+    src:path.join(__dirname,env.asset_path,'/scss'),
+    dest:path.join(__dirname,env.asset_path,'/css'),
     debug:true,
     outputStyle:'expanded',
     prefix:'/css'
@@ -43,7 +47,7 @@ app.use(cookieParser());
 //use the express layouts before it work with routes
 app.use(expressLayouts);
 //set up static files
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 //make the upload folder used by browser
 app.use('/uploads',express.static(__dirname+'/uploads'));
 //To decoded the post request we use urlencoded
@@ -62,7 +66,7 @@ app.set('views','./views');
 app.use(session({
     name: 'Chatter',
     //Todo before deployment
-    secret: 'something',
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave:false,
     cookie:{

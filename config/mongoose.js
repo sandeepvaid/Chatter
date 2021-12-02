@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+const env = require('./environment');
 
-mongoose.connect('mongodb://localhost/chatter_devlopment');
+// console.log('hey',process.env[CHATTER_DB])
+
+mongoose.connect(`mongodb://localhost/${env.db}`);
 
 const db = mongoose.connection;
 
