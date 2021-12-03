@@ -10,6 +10,8 @@ module.exports = (app) => {
             
         }
         console.log('run in prod')
+        var abc = '/' + JSON.parse(fs.readFileSync(path.join(__dirname, '../public/assets/rev-manifest.json')))[filePath];
+        console.log(abc);
         return '/' + JSON.parse(fs.readFileSync(path.join(__dirname, '../public/assets/rev-manifest.json')))[filePath];
     }
 }

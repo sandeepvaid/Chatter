@@ -1,4 +1,6 @@
-<link rel="stylesheet" href="/css/profile.css">
+<link rel="stylesheet" href="<%= assetPath('css/profile.css') %>">
+
+<!-- <link rel="stylesheet" href="/css/profile.css"> -->
 <div class="container">
     <div class="avatar-flip">
         <img src="<%= user_profile.avatar%>"  alt="user.name" height="150" width="150">
@@ -42,7 +44,9 @@
     
   </div>
 
- <script src="/js/profile.js"></script>
+<script src="<%= assetPath('js/profile.js')%>"></script>
+
+ 
 <script>
     $('.add-friend').each(function(){
         let self = this;
