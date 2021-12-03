@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const env = require('./config/environment');
 const app = express();
+require('./config/view_helpers')(app);
 const port = 8000;
 const cookieParser = require('cookie-parser');
 
@@ -34,15 +35,17 @@ chatServer.listen(5000);
 console.log("Chat server is listening ar port 5000");
 const path = require('path');
 
-//using scss middleware
-app.use(sassMiddleware({
-    src:path.join(__dirname,env.asset_path,'/scss'),
-    dest:path.join(__dirname,env.asset_path,'/css'),
-    debug:true,
-    outputStyle:'expanded',
-    prefix:'/css'
-}))
 
+//using scss middleware
+if(env.name == 'development'){
+    app.use(sassMiddleware({
+        src:path.join(__dirname,env.asset_path,'/scss'),
+        dest:path.join(__dirname,env.asset_path,'/css'),
+        debug:true,
+        outputStyle:'expanded',
+        prefix:'/css'
+    }));                                                    
+}
 app.use(cookieParser());
 //use the express layouts before it work with routes
 app.use(expressLayouts);
