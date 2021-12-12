@@ -4,7 +4,7 @@ dotenv.config();
 const env = require('./config/environment');
 const app = express();
 require('./config/view_helpers')(app);
-const port = 8000;
+const port = process.env.PORT || 8000;
 const cookieParser = require('cookie-parser');
 
 //Importing the express layouts
