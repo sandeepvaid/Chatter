@@ -1,1 +1,1 @@
-web: npm start_prod index.js
+web: npm run start_prod index.js
