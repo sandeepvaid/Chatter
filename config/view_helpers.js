@@ -6,12 +6,12 @@ module.exports = (app) => {
     app.locals.assetPath = function(filePath){
         if (env.name == 'development'){
             console.log('yes in dev')
-            return filePath;
+            return '/' + filePath;
             
         }
-        console.log('run in prod')
-        var abc = '/' + JSON.parse(fs.readFileSync(path.join(__dirname, '../public/assets/rev-manifest.json')))[filePath];
-        console.log(abc);
+        // console.log('run in prod')
+        // var abc = '/' + JSON.parse(fs.readFileSync(path.join(__dirname, '../public/assets/rev-manifest.json')))[filePath];
+    
         return '/' + JSON.parse(fs.readFileSync(path.join(__dirname, '../public/assets/rev-manifest.json')))[filePath];
     }
 }

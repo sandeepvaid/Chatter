@@ -47,6 +47,6 @@ const production = {
 
 console.log(process.env.CHATTER_ENVIRONEMENT)
 // console.log( eval(echo CHATTER_ENVIRONEMENT) == undefined ? development : eval(echo CHATTER_ENVIRONEMENT))
-
-
-module.exports = eval(process.env.CHATTER_ENVIRONEMENT) == undefined ? development : eval(process.env.CHATTER_ENVIRONEMENT);
+// development
+// eval(process.env.CHATTER_ENVIRONEMENT) == undefined ? development : eval(process.env.CHATTER_ENVIRONEMENT);
+module.exports =eval(process.env.CHATTER_ENVIRONEMENT) == undefined ? development : eval(process.env.CHATTER_ENVIRONEMENT); ;
